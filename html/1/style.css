@@ -1,0 +1,47 @@
+*, html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    width: 100%;
+}
+
+#top {
+    /* min-width: 780px; */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 4%;
+    overflow: hidden;
+}
+
+#logo {
+    display: inline-block;
+    width: 104px;
+    height: 36px;
+    background-color: #fff;
+    color: #4ec;
+    font-size: 25px;
+    font-family: "Helvetica Neue";
+    font-weight: bold;
+    line-height: 36px;
+}
+
+#menus {
+    float: right;
+    /* text-decoration: none; */
+    color: #0c4b0c;
+}
+
+#menus li {
+    font-weight: 700;
+    list-style: none;
+    float: left;
+}
+
+#menus li a {
+    display: block;
+    text-decoration: none;
+    color: #0c4b0c;
+    padding: 20px 10px;
+}
