@@ -10,7 +10,7 @@
 #top {
     /* min-width: 780px; */
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 60px auto 0px;
     padding: 0 4%;
     overflow: hidden;
 }
@@ -21,16 +21,19 @@
     height: 36px;
     background-color: #fff;
     color: #4ec;
-    font-size: 25px;
-    font-family: "Helvetica Neue";
+    font-size: 40px;
+    /* font-family: "Helvetica Neue"; */
+    font-family:  "Inter var", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
     font-weight: bold;
     line-height: 36px;
+    padding: 12px 0;
 }
 
 #menus {
     float: right;
     /* text-decoration: none; */
     color: #0c4b0c;
+    font-size: 16px;
 }
 
 #menus li {
@@ -44,4 +47,11 @@
     text-decoration: none;
     color: #0c4b0c;
     padding: 20px 10px;
+}
+
+#lines {
+    margin: 0 auto;
+    max-width: 1040px;
+    font-weight: bold;
+    border: 3px solid #222;
 }
