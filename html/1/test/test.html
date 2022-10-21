@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale">
+    <title>js实现打字机效果(高斯模糊背景)</title>
+    <style>
+        .box{
+            width: 750px;
+            height: 400px;
+            /* background: url('./img/timg.jpg') no-repeat 100% 100%; */
+            background-size: cover;
+            position: relative;
+        }
+        .content{
+            height: 60%;
+            width: 60%;
+            background: white;
+            position: absolute;            
+            left: 50%;
+            top: 50%;
+            margin-left: -30%;
+            margin-top: -16%;
+            border-radius: 4px;
+        }
+        /* filter是对该元素的模糊，因此对content添加并模糊伪元素，并定位到content的下层，而不是直接修改背景图或content的样式 */
+        .content::before{
+            content: '';
+            position: absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+            filter: blur(3px);
+            margin:-21px;  
+            /* background: url('./img/timg.jpg') no-repeat 100% 100%; */
+            background-size: cover;
+            opacity: .8;
+        }
+        .content p{
+            padding: 20px 15px;
+            color: black;
+            text-indent: 20px;
+            font-size: 14px;
+            line-height: 28px;
+            letter-spacing: 1px;
+            /* 清除子元素对父元素filter属性值的继承 */
+            filter: blur(0);          
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="content" id="contents">
+        </div>
+    </div>
+    <script>
+        function start(){
+            let str = ' 什么是永远？'
+            let str_ = ''
+            let i = 0
+            let content = document.getElementById('contents')
+            let timer = setInterval(()=>{
+                if(str_.length<str.length){
+                    str_ += str[i++]
+                    content.innerHTML = '<p>'+str_+'_</p>'                        //打印时加光标
+                }else{ 
+                    clearInterval(timer)
+                    content.innerHTML = '<p>'+str_+'</p>'
+                }
+            },600)
+        }
+        start()
+    </script>
+</body>
+</html>
