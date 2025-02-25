@@ -74,6 +74,16 @@
     updateTotals(); // 更新总计
   }
 
+  function removeEmptyRow(row) {
+    const inputs = row.querySelectorAll('input');
+    const isEmpty = Array.from(inputs).every(input => input.value.trim() === '');
+    if (isEmpty && tableBody.children.length > 1) { // 确保至少保留一行
+      row.remove();
+      rowCount--; // 减少行计数
+      updateTotals(); // 更新总计
+    }
+  }
+
   function updateTotalWeight() {
     let totalWeight = 0;
     const weightInputs = document.querySelectorAll('.weight');
@@ -118,6 +128,9 @@
           hasGeneratedRow = true; // 设置标记为已生成
         }
       }
+
+      // 检查是否需要删除当前行
+      removeEmptyRow(row);
     });
   }
 
