@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态表格</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .total-row {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center;">动态表格示例</h1>
+<table id="dynamicTable">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>件数</th>
+        <th>重量</th>
+        <th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td><input type="number" class="quantity"></td>
+        <td><input type="number" class="weight"></td>
+        <td><input type="text" class="note"></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="total-row">
+        <td id="totalCount">1</td>
+        <td id="totalQuantity">0</td>
+        <td id="totalWeight">0</td>
+        <td></td>
+    </tr>
+    </tfoot>
+</table>
+
+<script>
+    const tableBody = document.querySelector('#dynamicTable tbody');
+    const totalWeightCell = document.getElementById('totalWeight');
+    const totalQuantityCell = document.getElementById('totalQuantity');
+    const totalCountCell = document.getElementById('totalCount');
+
+    let rowCount = 1; // 当前行数计数器
+
+    function addNewRow() {
+        rowCount++; // 增加行计数
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+                <td>${rowCount}</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="weight"></td>
+                <td><input type="text" class="note"></td>
+            `;
+        tableBody.appendChild(newRow);
+        attachEventListenersToRow(newRow);
+        updateTotals(); // 更新总计
+    }
+
+    function removeEmptyRow(row) {
+        const inputs = row.querySelectorAll('input');
+        const isEmpty = Array.from(inputs).every(input => input.value.trim() === '');
+        if (isEmpty && tableBody.children.length > 1) { // 确保至少保留一行
+            row.remove();
+            rowCount--; // 减少行计数
+            updateTotals(); // 更新总计
+        }
+    }
+
+    function updateTotalWeight() {
+        let totalWeight = 0;
+        const weightInputs = document.querySelectorAll('.weight');
+        weightInputs.forEach(input => {
+            if (!isNaN(input.value)) {
+                totalWeight += parseFloat(input.value) || 0;
+            }
+        });
+        totalWeightCell.textContent = totalWeight.toFixed(2);
+    }
+
+    function updateTotalQuantity() {
+        let totalQuantity = 0;
+        const quantityInputs = document.querySelectorAll('.quantity');
+        quantityInputs.forEach(input => {
+            if (!isNaN(input.value)) {
+                totalQuantity += parseFloat(input.value) || 0;
+            }
+        });
+    totalQuantityCell.textContent = String(totalQuantity.toFixed(0)); // 不保留小数
+    }
+
+    function updateTotals() {
+        totalCountCell.textContent = rowCount; // 更新序号总计
+        updateTotalWeight(); // 更新重量总计
+        updateTotalQuantity(); // 更新件数总计
+        // 更新所有行的序号
+        const rows = tableBody.querySelectorAll('tr');
+        rows.forEach((row, index) => {
+            row.querySelector('td:first-child').textContent = index + 1;
+        });
+    }
+    function attachEventListenersToRow(row) {
+        let hasGeneratedRow = false; // 标记该行是否已生成新行
+
+        row.addEventListener('input', (event) => {
+            if (event.target.classList.contains('quantity') || event.target.classList.contains('weight')) {
+                updateTotals(); // 更新所有总计
+            }
+
+            // 检查是否需要新增一行
+            if (!hasGeneratedRow) {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value || inputs[2].value) {
+                    addNewRow();
+                    hasGeneratedRow = true; // 设置标记为已生成
+                }
+            }
+
+            // 检查是否需要删除当前行
+            removeEmptyRow(row);
+        });
+    }
+
+    // 初始化事件监听器
+    tableBody.querySelectorAll('tr').forEach(tr => attachEventListenersToRow(tr));
+</script>
+</body>
+</html>
