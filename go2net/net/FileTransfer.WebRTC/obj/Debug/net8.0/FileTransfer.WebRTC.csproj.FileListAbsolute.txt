@@ -1,0 +1,10 @@
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.csproj.AssemblyReference.cache
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.GeneratedMSBuildEditorConfig.editorconfig
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.AssemblyInfoInputs.cache
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.AssemblyInfo.cs
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.csproj.CoreCompileInputs.cache
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.MvcApplicationPartsAssemblyInfo.cs
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.MvcApplicationPartsAssemblyInfo.cache
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.RazorAssemblyInfo.cache
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.RazorAssemblyInfo.cs
+/home/pecmen/git/github/pecmens/projects/go2net/net/FileTransfer.WebRTC/obj/Debug/net8.0/FileTransfer.WebRTC.sourcelink.json

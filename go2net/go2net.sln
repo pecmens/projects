@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net", "net", "{9BD00AEE-B457-8A53-4987-79B2CE11DF4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTransfer.WebRTC", "net\FileTransfer.WebRTC\FileTransfer.WebRTC.csproj", "{161217E9-6850-32AA-A254-C810ECD26D04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{161217E9-6850-32AA-A254-C810ECD26D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{161217E9-6850-32AA-A254-C810ECD26D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{161217E9-6850-32AA-A254-C810ECD26D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{161217E9-6850-32AA-A254-C810ECD26D04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{161217E9-6850-32AA-A254-C810ECD26D04} = {9BD00AEE-B457-8A53-4987-79B2CE11DF4C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2E2756C-46E6-42A3-82E3-11F602E8BCD6}
+	EndGlobalSection
+EndGlobal
