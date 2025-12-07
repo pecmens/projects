@@ -1,0 +1,41 @@
+# SSPS 前端依赖清单
+
+## 运行时要求
+- Node.js 18.17.0 或更高版本
+- npm 或 yarn 包管理器
+
+## 核心依赖
+- next: ^14.0.0 (React框架)
+- react: ^18.2.0 (UI库)
+- react-dom: ^18.2.0 (React渲染)
+- react-markdown: ^8.0.7 (Markdown渲染)
+- remark-gfm: ^3.0.1 (Markdown扩展)
+- rehype-highlight: ^6.0.0 (代码高亮)
+- highlight.js: ^11.9.0 (语法高亮)
+
+## 开发依赖
+- @types/node: ^20.0.0 (Node.js类型定义)
+- @types/react: ^18.2.0 (React类型定义)
+- @types/react-dom: ^18.2.0 (React DOM类型定义)
+- @types/react-markdown: ^8.0.0 (React Markdown类型定义)
+- @types/unist: ^2.0.6 (Markdown AST类型)
+- autoprefixer: ^10.4.16 (CSS自动前缀)
+- postcss: ^8.4.31 (CSS处理)
+- tailwindcss: ^3.3.0 (CSS框架)
+- eslint: ^8.0.0 (代码检查)
+- eslint-config-next: ^14.0.0 (Next.js ESLint配置)
+- typescript: ^5.0.0 (类型检查)
+
+## 构建和开发脚本
+- dev: 启动开发服务器
+- build: 构建生产版本
+- start: 启动生产服务器
+- export: 导出静态文件
+- lint: 代码检查
+- preview: 预览生产构建
+- type-check: 类型检查
+
+## 生产环境要求
+- 静态文件服务器 (Nginx, Apache, CDN)
+- 支持现代浏览器
+- HTTPS推荐

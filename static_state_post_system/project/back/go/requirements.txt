@@ -1,0 +1,26 @@
+# SSPS Go后端依赖清单
+
+## 运行时要求
+- Go 1.21 或更高版本
+
+## 核心依赖 (来自go.mod)
+- github.com/gin-gonic/gin v1.9.1 (Web框架)
+- gorm.io/gorm v1.25.3 (ORM)
+- gorm.io/driver/sqlite v1.5.2 (SQLite数据库驱动)
+- gorm.io/driver/postgres v1.5.4 (PostgreSQL数据库驱动)
+- github.com/golang-jwt/jwt/v5 v5.0.0 (JWT认证)
+- golang.org/x/crypto (密码学工具，包含bcrypt)
+
+## 附加组件
+- github.com/gin-contrib/cors (CORS支持)
+- github.com/gin-contrib/static (静态文件服务)
+
+## 开发工具
+- go build (编译工具)
+- go run (运行工具)
+- go mod (模块管理)
+
+## 生产环境考虑
+- 支持SQLite (开发和小型部署)
+- 支持PostgreSQL (生产环境推荐)
+- 支持MySQL (可选)
