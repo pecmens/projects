@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const routes = [{\n  path: '',\n  loadComponent: () => import('./home/home.component').then(c => c.HomeComponent)\n}];","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

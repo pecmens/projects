@@ -1,0 +1,122 @@
+<div class="home-container">
+  <!-- 实时汇率显示 -->
+  <section class="rates-section">
+    <div class="section-header">
+      <h2>📈 实时外汇汇率</h2>
+      <div class="update-info">
+        <span>最后更新: {{ formatTime(lastUpdate) }}</span>
+        <button class="refresh-btn" (click)="refreshRates()" [disabled]="isLoading">
+          <span *ngIf="!isLoading">🔄 刷新</span>
+          <span *ngIf="isLoading">⏳ 加载中...</span>
+        </button>
+      </div>
+    </div>
+    <div class="rates-grid" *ngIf="!isLoading; else loadingTemplate">
+      <div class="rate-card" *ngFor="let rate of forexRates" 
+           [ngClass]="getChangeClass(rate.changePercent)">
+        <div class="currency-header">
+          <span class="currency-code">{{ rate.currency }}</span>
+          <span class="currency-name">{{ getCurrencyName(rate.currency) }}</span>
+        </div>
+        <div class="rate-info">
+          <div class="current-rate">{{ formatNumber(rate.rate) }}</div>
+          <div class="change-info">
+            <span class="change-icon">{{ getChangeIcon(rate.changePercent) }}</span>
+            <span class="change-value">{{ formatNumber(getAbsoluteValue(rate.change)) }}</span>
+            <span class="change-percent">({{ formatNumber(rate.changePercent) }}%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #loadingTemplate>
+      <div class="loading-container">
+        <div class="loading-spinner">⏳</div>
+        <p>正在加载汇率数据...</p>
+      </div>
+    </ng-template>
+  </section>
+
+  <!-- 货币转换器 -->
+  <section class="converter-section">
+    <div class="section-header">
+      <h2>💱 货币转换器</h2>
+    </div>
+
+    <div class="converter-card">
+      <div class="converter-input-group">
+        <label for="amount">金额</label>
+        <input 
+          type="number" 
+          id="amount"
+          [(ngModel)]="amount" 
+          (ngModelChange)="onAmountChange()"
+          min="0"
+          step="0.01"
+          class="amount-input"
+        />
+      </div>
+
+      <div class="currency-selector-group">
+        <div class="currency-selector">
+          <label for="fromCurrency">从</label>
+          <select 
+            id="fromCurrency"
+            [(ngModel)]="fromCurrency" 
+            (ngModelChange)="onCurrencyChange()"
+            class="currency-select"
+          >
+            <option value="USD">USD - 美元</option>
+            <option *ngFor="let rate of forexRates" [value]="rate.currency">
+              {{ rate.currency }} - {{ getCurrencyName(rate.currency) }}
+            </option>
+          </select>
+        </div>
+
+        <button class="swap-btn" (click)="swapCurrencies()" title="交换货币">
+          ⇄
+        </button>
+
+        <div class="currency-selector">
+          <label for="toCurrency">到</label>
+          <select 
+            id="toCurrency"
+            [(ngModel)]="toCurrency" 
+            (ngModelChange)="onCurrencyChange()"
+            class="currency-select"
+          >
+            <option value="USD">USD - 美元</option>
+            <option *ngFor="let rate of forexRates" [value]="rate.currency">
+              {{ rate.currency }} - {{ getCurrencyName(rate.currency) }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="result-section" *ngIf="convertedAmount > 0">
+        <div class="result-header">转换结果</div>
+        <div class="result-amount">
+          <span class="from-amount">{{ formatNumber(amount) }} {{ fromCurrency }}</span>
+          <span class="equals">=</span>
+          <span class="to-amount">{{ formatNumber(convertedAmount) }} {{ toCurrency }}</span>
+        </div>
+        <div class="result-info">
+          汇率: 1 {{ fromCurrency }} = {{ formatNumber(convertedAmount / amount) }} {{ toCurrency }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使用说明 -->
+  <section class="info-section">
+    <div class="info-card">
+      <h3>ℹ️ 使用说明</h3>
+      <ul>
+        <li>汇率数据每30秒自动更新一次</li>
+        <li>绿色表示上涨，红色表示下跌</li>
+        <li>转换器支持主要货币之间的实时转换</li>
+        <li>数据仅供参考，实际交易请以银行汇率为准</li>
+      </ul>
+    </div>
+  </section>
+</div>
