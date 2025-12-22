@@ -1,0 +1,26 @@
+# SSPS C#后端依赖清单
+
+## 运行时要求
+- .NET 8.0 SDK 和 Runtime
+
+## 核心依赖 (来自SSPS.Api.csproj)
+- Microsoft.AspNetCore.OpenApi (API文档)
+- Swashbuckle.AspNetCore (Swagger UI)
+- Microsoft.EntityFrameworkCore (ORM)
+- Microsoft.EntityFrameworkCore.SqlServer (SQL Server驱动)
+- Microsoft.EntityFrameworkCore.Tools (EF工具)
+- Microsoft.EntityFrameworkCore.Design (EF设计时工具)
+- Microsoft.AspNetCore.Authentication.JwtBearer (JWT认证)
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore (身份管理)
+- BCrypt.Net-Next (密码哈希)
+- Microsoft.Extensions.Identity.Stores (身份存储)
+
+## 开发和部署要求
+- Visual Studio 2022 或 Visual Studio Code
+- SQL Server LocalDB (开发) 或 SQL Server (生产)
+- Entity Framework Core Tools (全局安装)
+
+## 生产环境考虑
+- Windows Server (IIS部署) 或 Linux (Kestrel部署)
+- SQL Server, PostgreSQL, MySQL 或 SQLite (根据配置)
+- 反向代理 (如Nginx) 推荐用于生产环境

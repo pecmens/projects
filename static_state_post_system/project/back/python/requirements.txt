@@ -1,0 +1,25 @@
+# SSPS Python后端依赖文件
+
+# Web框架
+Django==4.2.7
+djangorestframework==3.14.0
+
+# 认证
+djangorestframework-simplejwt==5.3.0
+
+# 数据库 (SQLite默认，支持其他数据库)
+# 如需使用其他数据库，请取消相应行的注释
+# psycopg2-binary==2.9.7  # PostgreSQL
+# mysqlclient==2.2.0      # MySQL
+
+# 环境变量管理
+python-decouple==3.8
+
+# 图像处理
+Pillow==10.0.1
+
+# 安全
+cryptography==41.0.7
+
+# 开发工具
+# python-dotenv==1.0.0  # 如果使用python-decouple则不需要

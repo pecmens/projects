@@ -1,0 +1,22 @@
+{
+  "name": "static-state-post-system",
+  "version": "1.0.0",
+  "description": "静态状态发布系统 (Static State Post System, SSPS) - 一个轻量级的博客生成与管理系统",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
+    "dev:front": "cd project/front && npm run dev",
+    "dev:back": "cd project/back/python && python app.py",
+    "build": "npm run build:front && npm run build:back",
+    "build:front": "cd project/front && npm run build",
+    "build:back": "cd project/back/python && python build.py",
+    "start": "node server.js",
+    "init": "node init.js"
+  },
+  "keywords": ["blog", "static-site-generator", "nextjs", "django", "gin", "aspnet-core"],
+  "author": "SSPS Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
