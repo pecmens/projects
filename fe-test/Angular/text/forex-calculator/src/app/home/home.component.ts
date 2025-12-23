@@ -65,6 +65,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // 检查汇率数据是否已加载
+    if (this.forexRates.length === 0) {
+      return;
+    }
+
     this.forexService.convertCurrency(this.fromCurrency, this.toCurrency, this.amount)
       .subscribe({
         next: (result) => {
