@@ -1,0 +1,11 @@
+{
+  "name": "ssq-frontend",
+  "version": "1.0.0",
+  "description": "双色球查询系统前端",
+  "scripts": {
+    "start": "http-server -p 4200 -c-1"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

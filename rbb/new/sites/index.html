@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双色球查询系统</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 400px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table th {
+            background: #f5f5f5;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .ball {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin: 2px;
+        }
+        
+        .red-ball {
+            background: #ff4757;
+            color: white;
+        }
+        
+        .blue-ball {
+            background: #3742fa;
+            color: white;
+        }
+        
+        .result {
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stats-box {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f5f5f5;
+        }
+        
+        .stats-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .pagination button {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .red-balls-input {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        
+        .red-balls-input input {
+            text-align: center;
+        }
+    </style>
+</head>
+<body ng-app="ssqApp" ng-controller="MainCtrl">
+    <div class="container">
+        <div class="header">
+            <h1>🎱 双色球查询系统</h1>
+            <p>历史开奖查询 · 中奖核对 · 统计分析</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab" ng-class="{active: currentTab === 'query'}" ng-click="switchTab('query')">开奖查询</button>
+            <button class="tab" ng-class="{active: currentTab === 'check'}" ng-click="switchTab('check')">中奖核对</button>
+            <button class="tab" ng-class="{active: currentTab === 'stats'}" ng-click="switchTab('stats')">统计分析</button>
+            <button class="tab" ng-class="{active: currentTab === 'manage'}" ng-click="switchTab('manage')">数据管理</button>
+        </div>
+        
+        <div class="content">
+            <!-- 查询页面 -->
+            <div ng-show="currentTab === 'query'">
+                <h2>📊 开奖记录查询</h2>
+                <div class="form-group">
+                    <label>搜索方式</label>
+                    <select ng-model="searchType" ng-change="toggleSearchInput()">
+                        <option value="all">显示全部</option>
+                        <option value="times">按期号</option>
+                        <option value="date">按日期</option>
+                    </select>
+                </div>
+                <div class="form-group" ng-show="searchType !== 'all'">
+                    <label>{{searchType === 'times' ? '期号' : '日期'}}</label>
+                    <input type="text" ng-model="searchValue" placeholder="请输入搜索值">
+                </div>
+                <button class="btn" ng-click="searchRecords()">查询</button>
+                
+                <div ng-if="loading" class="loading">加载中...</div>
+                <div ng-if="!loading && records.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>期号</th>
+                                <th>日期</th>
+                                <th>红球</th>
+                                <th>蓝球</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="record in records">
+                                <td>{{record.times}}</td>
+                                <td>{{record.date}}</td>
+                                <td>
+                                    <span class="ball red-ball" ng-repeat="ball in record.red_balls">{{ball}}</span>
+                                </td>
+                                <td><span class="ball blue-ball">{{record.blue_ball}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="pagination" ng-if="totalPages > 1">
+                        <button ng-click="loadPage(currentPage - 1)" ng-disabled="currentPage === 1">上一页</button>
+                        <span>第 {{currentPage}} / {{totalPages}} 页</span>
+                        <button ng-click="loadPage(currentPage + 1)" ng-disabled="currentPage === totalPages">下一页</button>
+                    </div>
+                </div>
+                <div ng-if="!loading && records.length === 0" class="result info">暂无数据</div>
+            </div>
+            
+            <!-- 核对页面 -->
+            <div ng-show="currentTab === 'check'">
+                <h2>🎯 中奖核对</h2>
+                <div class="form-group">
+                    <label>红球号码（6个）</label>
+                    <div class="red-balls-input">
+                        <input type="text" ng-model="check.red[0]" placeholder="01" maxlength="2">
+                        <input type="text" ng-model="check.red[1]" placeholder="02" maxlength="2">
+                        <input type="text" ng-model="check.red[2]" placeholder="03" maxlength="2">
+                        <input type="text" ng-model="check.red[3]" placeholder="04" maxlength="2">
+                        <input type="text" ng-model="check.red[4]" placeholder="05" maxlength="2">
+                        <input type="text" ng-model="check.red[5]" placeholder="06" maxlength="2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>蓝球号码（1个）</label>
+                    <input type="text" ng-model="check.blue" placeholder="01" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label>指定期号（可选）</label>
+                    <input type="text" ng-model="check.times" placeholder="留空则核对最新一期">
+                </div>
+                <button class="btn" ng-click="checkPrize()">核对中奖</button>
+                
+                <div ng-if="checkResult" class="result" ng-class="checkResult.prize === '未中奖' ? 'info' : 'success'">
+                    <h3>中奖等级: {{checkResult.prize}}</h3>
+                    <p>开奖期号: {{checkResult.record.times}}</p>
+                    <p>开奖日期: {{checkResult.record.date}}</p>
+                    <p>开奖号码: <span class="ball red-ball" ng-repeat="ball in checkResult.record.red_balls">{{ball}}</span> <span class="ball blue-ball">{{checkResult.record.blue_ball}}</span></p>
+                    <p>您的号码: <span class="ball red-ball" ng-repeat="ball in check.red">{{ball}}</span> <span class="ball blue-ball">{{check.blue}}</span></p>
+                </div>
+                <div ng-if="checkError" class="result error">{{checkError}}</div>
+            </div>
+            
+            <!-- 统计页面 -->
+            <div ng-show="currentTab === 'stats'">
+                <h2>📈 统计分析</h2>
+                <button class="btn" ng-click="loadStatistics()">刷新统计</button>
+                
+                <div ng-if="statsLoading" class="loading">加载中...</div>
+                <div ng-if="!statsLoading && statistics" class="stats-grid">
+                    <div class="stats-box">
+                        <h3>🔴 红球频率（前10）</h3>
+                        <div class="stat-item" ng-repeat="item in statistics.red_frequency.slice(0, 10)">
+                            <span><span class="ball red-ball">{{item[0]}}</span></span>
+                            <span>{{item[1]}}次</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-box">
+                        <h3>🔵 蓝球频率（前10）</h3>
+                        <div class="stat-item" ng-repeat="item in statistics.blue_frequency.slice(0, 10)">
+                            <span><span class="ball blue-ball">{{item[0]}}</span></span>
+                            <span>{{item[1]}}次</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-box">
+                        <h3>🔥 热号（高频）</h3>
+                        <p>红球: <span class="ball red-ball" ng-repeat="ball in statistics.hot_numbers.red">{{ball}}</span></p>
+                        <p>蓝球: <span class="ball blue-ball" ng-repeat="ball in statistics.hot_numbers.blue">{{ball}}</span></p>
+                    </div>
+                    
+                    <div class="stats-box">
+                        <h3>❄️ 冷号（低频）</h3>
+                        <p>红球: <span class="ball red-ball" ng-repeat="ball in statistics.cold_numbers.red">{{ball}}</span></p>
+                        <p>蓝球: <span class="ball blue-ball" ng-repeat="ball in statistics.cold_numbers.blue">{{ball}}</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 管理页面 -->
+            <div ng-show="currentTab === 'manage'">
+                <h2>⚙️ 数据管理</h2>
+                <div class="form-group">
+                    <button class="btn" ng-click="initDatabase()">初始化数据库</button>
+                    <button class="btn" ng-click="updateData()" style="margin-left: 10px;">更新数据</button>
+                </div>
+                
+                <div ng-if="manageResult" class="result success">
+                    <p>{{manageResult.message}}</p>
+                    <p ng-if="manageResult.total">共 {{manageResult.total}} 条记录</p>
+                    <p ng-if="manageResult.added !== undefined">新增 {{manageResult.added}} 条，更新 {{manageResult.updated}} 条</p>
+                </div>
+                <div ng-if="manageError" class="result error">{{manageError}}</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var app = angular.module('ssqApp', []);
+        
+        app.controller('MainCtrl', function($scope, $http) {
+            $scope.currentTab = 'query';
+            $scope.API_BASE = 'http://localhost:5000/api';
+            $scope.loading = false;
+            $scope.statsLoading = false;
+            $scope.currentPage = 1;
+            $scope.totalPages = 1;
+            
+            $scope.searchType = 'all';
+            $scope.searchValue = '';
+            
+            $scope.check = {
+                red: ['', '', '', '', '', ''],
+                blue: '',
+                times: ''
+            };
+            
+            $scope.records = [];
+            $scope.statistics = null;
+            
+            // 切换标签页
+            $scope.switchTab = function(tab) {
+                $scope.currentTab = tab;
+                if (tab === 'query') {
+                    $scope.loadRecords(1);
+                }
+            };
+            
+            // 加载开奖记录
+            $scope.loadRecords = function(page) {
+                $scope.loading = true;
+                $http.get($scope.API_BASE + '/records?page=' + page + '&per_page=20')
+                    .then(function(response) {
+                        $scope.records = response.data.records;
+                        $scope.currentPage = response.data.current_page;
+                        $scope.totalPages = response.data.pages;
+                        $scope.loading = false;
+                    })
+                    .catch(function(error) {
+                        $scope.loading = false;
+                        alert('加载失败: ' + (error.data.error || error.statusText));
+                    });
+            };
+            
+            // 搜索记录
+            $scope.searchRecords = function() {
+                $scope.loading = true;
+                var url = $scope.API_BASE + '/records/search';
+                var params = [];
+                
+                if ($scope.searchType === 'times' && $scope.searchValue) {
+                    params.push('times=' + $scope.searchValue);
+                }
+                if ($scope.searchType === 'date' && $scope.searchValue) {
+                    params.push('date=' + $scope.searchValue);
+                }
+                
+                if (params.length > 0) {
+                    url += '?' + params.join('&');
+                }
+                
+                $http.get(url)
+                    .then(function(response) {
+                        $scope.records = response.data.records;
+                        $scope.loading = false;
+                    })
+                    .catch(function(error) {
+                        $scope.loading = false;
+                        alert('搜索失败: ' + (error.data.error || error.statusText));
+                    });
+            };
+            
+            // 加载页面
+            $scope.loadPage = function(page) {
+                if (page >= 1 && page <= $scope.totalPages) {
+                    $scope.loadRecords(page);
+                }
+            };
+            
+            // 核对中奖
+            $scope.checkPrize = function() {
+                var redBalls = $scope.check.red.map(function(val) {
+                    return val.trim().padStart(2, '0');
+                });
+                
+                if (redBalls.some(function(v) { return !v; })) {
+                    alert('请输入6个红球号码');
+                    return;
+                }
+                
+                var blueBall = $scope.check.blue.trim().padStart(2, '0');
+                if (!blueBall) {
+                    alert('请输入蓝球号码');
+                    return;
+                }
+                
+                $scope.checkResult = null;
+                $scope.checkError = null;
+                
+                $http.post($scope.API_BASE + '/check', {
+                    red_balls: redBalls,
+                    blue_ball: blueBall,
+                    times: $scope.check.times || null
+                })
+                    .then(function(response) {
+                        $scope.checkResult = response.data;
+                    })
+                    .catch(function(error) {
+                        $scope.checkError = error.data.error || '核对失败';
+                    });
+            };
+            
+            // 加载统计数据
+            $scope.loadStatistics = function() {
+                $scope.statsLoading = true;
+                $http.get($scope.API_BASE + '/stats')
+                    .then(function(response) {
+                        $scope.statistics = response.data;
+                        $scope.statsLoading = false;
+                    })
+                    .catch(function(error) {
+                        $scope.statsLoading = false;
+                        alert('加载失败: ' + (error.data.error || error.statusText));
+                    });
+            };
+            
+            // 初始化数据库
+            $scope.initDatabase = function() {
+                if (!confirm('确定要初始化数据库吗？这将创建数据库并加载历史数据。')) {
+                    return;
+                }
+                
+                $scope.manageResult = null;
+                $scope.manageError = null;
+                
+                $http.post($scope.API_BASE + '/init')
+                    .then(function(response) {
+                        $scope.manageResult = response.data;
+                    })
+                    .catch(function(error) {
+                        $scope.manageError = error.data.error || '初始化失败';
+                    });
+            };
+            
+            // 更新数据
+            $scope.updateData = function() {
+                if (!confirm('确定要更新数据吗？')) {
+                    return;
+                }
+                
+                $scope.manageResult = null;
+                $scope.manageError = null;
+                
+                $http.post($scope.API_BASE + '/update')
+                    .then(function(response) {
+                        $scope.manageResult = response.data;
+                    })
+                    .catch(function(error) {
+                        $scope.manageError = error.data.error || '更新失败';
+                    });
+            };
+            
+            // 初始化加载
+            $scope.loadRecords(1);
+        });
+    </script>
+</body>
+</html>
